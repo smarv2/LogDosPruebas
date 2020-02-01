@@ -23,9 +23,9 @@ public class LogDosPruebas {
         // TODO code application logic here
         //System.out.println("oli");
         LOG.info("oli");
+        LOG.info("como estas");
         OtraClase otraClase = new OtraClase();
-        otraClase.pintaOtroLog();
-        
+        otraClase.pintaOtroLog();   
     }
     
 }

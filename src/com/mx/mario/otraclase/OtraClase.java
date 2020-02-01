@@ -19,6 +19,7 @@ public class OtraClase {
     public void pintaOtroLog(){
         
         LOG.info("oli desde otra clase :)");
+        LOG.info("soy un pro :)");
     }
     
 }
