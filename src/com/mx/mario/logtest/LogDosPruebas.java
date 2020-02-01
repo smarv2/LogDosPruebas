@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.mx.mario.logtest;
+import com.mx.mario.otraclase.OtraClase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 /**
@@ -20,8 +21,11 @@ public class LogDosPruebas {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("oli");
+        //System.out.println("oli");
         LOG.info("oli");
+        OtraClase otraClase = new OtraClase();
+        otraClase.pintaOtroLog();
+        
     }
     
 }

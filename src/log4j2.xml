@@ -3,23 +3,11 @@
     <Properties>
         <Property name="basePath">/tmp/</Property>
         <Property name="logName">testeLog</Property>
+        <Property name="logNameDos">testeLogDos</Property>
     </Properties>
  
     <Appenders>
-        <!--RollingFile name="fileLogger" fileName="${basePath}/${logName}.log" 
-                     filePattern="${basePath}/${logName}-%d{yyyy-MM-dd}.log.gz">
-            <PatternLayout>
-                <pattern>%d - [%-5p]-(%F, Linea:%L) - %m%n</pattern>
-            </PatternLayout>
-            <CronTriggeringPolicy schedule="0 0 0 * * ?" />
-            <DefaultRolloverStrategy>
-                <Delete basePath="$(basePath)" maxDepth="2">
-                    <IfFileName glob="*/app-*.log.gz" />
-                    <IfLastModified age="60d" />
-                </Delete>
-            </DefaultRolloverStrategy>
-        </RollingFile-->
-        
+        <!-- Primer LOG -->        
         <RollingFile name="RollingFileMain" fileName="${basePath}${logName}.log" filePattern="${basePath}${logName}-%d{yyyy-MM-dd}.log">
             <PatternLayout>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} - [%-5p]-(%F, Linea:%L) - %m%n</pattern>
@@ -27,7 +15,33 @@
             <Policies>
                 <TimeBasedTriggeringPolicy/>
             </Policies>
-            <DefaultRolloverStrategy max="2"/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${basePath}" maxDepth="1">
+                    <IfFileName glob="${logName}-????-??-??.log">
+                        <IfAny>
+                            <IfAccumulatedFileCount exceeds="5" />
+                        </IfAny>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <!-- Segundo LOG -->
+        <RollingFile name="RollingFileMainDos" fileName="${basePath}${logNameDos}.log" filePattern="${basePath}${logNameDos}-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - [%-5p]-(%F, Linea:%L) - %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${basePath}" maxDepth="1">
+                    <IfFileName glob="${logNameDos}-????-??-??.log">
+                        <IfAny>
+                            <IfAccumulatedFileCount exceeds="5" />
+                        </IfAny>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
  
         <Console name="console" target="SYSTEM_OUT">
@@ -37,8 +51,13 @@
     </Appenders>
     
     <Loggers>
+        <!-- LOG Uno-->
         <Logger name="com.mx.mario.logtest" level="debug" additivity="true">
             <appender-ref ref="RollingFileMain" level="debug" />
+        </Logger>
+        <!-- LOG Dos-->
+        <Logger name="com.mx.mario.otraclase" level="debug" additivity="true">
+            <appender-ref ref="RollingFileMainDos" level="debug" />
         </Logger>
         <Root level="debug" additivity="false">
             <appender-ref ref="console" />
